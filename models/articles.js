@@ -12,10 +12,18 @@ const ArticleSchema = new Schema({
         type: String,
         required: true
     },
+    time: {
+        type: String,
+    },
+    image: {
+        type:String,
+    },
     note: {
         type: Schema.Types.ObjectId,
         ref: "Notes"
-    }
+    },
+    saved: Boolean,
+    hearturl: String
 });
 
 var Articles = mongoose.model("Articles", ArticleSchema);

@@ -3,7 +3,11 @@
         <h1 class="display-4">News Commentor</h1>
     </div>
     <div class="headline">
-        <p>Scrape...Save...Comment</p>
+        {{#if this}}
+            {{this}}
+        {{else}}
+           Scrape...Save...Comment
+        {{/if}}
     </div>
 
 </div>

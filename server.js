@@ -1,18 +1,18 @@
-var express = require("express");
-var logger = require("morgan");
-var mongoose = require("mongoose");
-var PORT = 3000
-var MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/mongoHeadlines";
+const express = require("express");
+const logger = require("morgan");
+const mongoose = require("mongoose");
+const PORT = 3000
+const MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/mongoGamespot";
 
 
-var app = express();
+const app = express();
 app.use(logger("dev"));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static("public"));
 
 mongoose.Promise = Promise;
 mongoose.connect(MONGODB_URI, { useNewUrlParser: true });
-var exphbs = require("express-handlebars");
+const exphbs = require("express-handlebars");
 
 app.engine("handlebars", exphbs({ defaultLayout: "main" }));
 app.set("view engine", "handlebars");

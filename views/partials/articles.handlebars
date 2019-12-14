@@ -1,0 +1,16 @@
+<div class="row">
+    <div class="col-3 articlesImage">
+        <img src={{this.image}}>
+    </div>
+    <div class="col-8 articles" data-articleId={{this.id}}>
+        <div>
+            <p>title: {{this.title}}</p>
+            <p>link: <a target="_blank" href={{this.link}}>{{this.link}}</a></p>
+            <p>{{this.time}}</p>
+        </div>
+    </div>
+    <div class="col-1 icons">
+        <img id="heart{{this.id}}" class="heart" data-articleId={{this.id}} data-saved={{this.saved}} src={{this.hearturl}}>
+        <img id="note{{this.id}}" data-articleId={{this.id}} src="https://img.icons8.com/dusk/64/000000/note.png">
+    </div>
+</div>

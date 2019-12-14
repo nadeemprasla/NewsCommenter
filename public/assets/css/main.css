@@ -48,7 +48,6 @@ padding: 0;
     text-align: center;
     letter-spacing: 2px;
     font-size: 20px;
-
 }
 .display-4 {
     text-shadow: 1px 1px 10px yellow;
@@ -56,4 +55,32 @@ padding: 0;
     font-size: 100px;
     font-family: 'Times New Roman', Times, serif;
     text-align: center;
+}
+
+#mainContent {
+    padding: 5vh 5vw;
+}
+
+#mainContent .row {
+    height: 25vh;
+    color: white;
+    padding: 1vh 1vw;
+    border: 1px solid white;
+    margin: auto
+
+}
+.articles div{
+    /* display: inline-block; */
+    float: left;
+    padding-top: 4vh;
+    margin-left: 1vw;
+}
+
+.articlesImage img{
+    margin-top: 1.5vh;
+}
+
+.col-1 img {
+    background-color: white;
+    border-radius: 100px;
 }
