@@ -6,6 +6,7 @@ $(document).ready(function () {
     $(".heart").on("click", function (e) {
         isSaved = e.target.dataset.saved
         id = e.target.id
+        console.log(e)
         if (isSaved == "false") {
             $("#" + id).attr("src", "https://img.icons8.com/cotton/64/000000/like--v3.png")
             $("#" + id).attr("data-saved", "true")
@@ -27,8 +28,9 @@ $(document).ready(function () {
                 saved: "false",
                 hearturl: "https://img.icons8.com/pastel-glyph/64/000000/like--v1.png"
             }, (updatedArticle) => {
-                console.log(updatedArticle)
-                if (e.target.baseURI === "http://localhost:3000/saved") {
+                value = e.target.baseURI
+                value = value.search("/saved")
+                if (value > 0) {
                     $("#" + id).parent().parent().removeClass()
                     $("#" + id).parent().parent().html("")
                 }
