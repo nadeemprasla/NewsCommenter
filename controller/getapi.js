@@ -55,6 +55,7 @@ module.exports = function (app) {
 
     app.get("/clear", (req, res) => {
         db.Articles.deleteMany({}, (err) => { if (err) console.log(err) })
+        db.Notes.deleteMany({}, (err) => { if (err) console.log(err) })
         res.render("index", { status: "Articles Cleared..." })
     })
 
@@ -68,10 +69,10 @@ module.exports = function (app) {
 
     app.post("/heart", (req, res) => {
         console.log(req.body)
-        db.Articles.findOneAndUpdate({ _id: req.body.id }, {hearturl: req.body.hearturl}, {new:true})
-        .then((updatedArticle)=>{
-            res.json(updatedArticle)
-        })
+        db.Articles.findOneAndUpdate({ _id: req.body.id }, { hearturl: req.body.hearturl }, { new: true })
+            .then((updatedArticle) => {
+                res.json(updatedArticle)
+            })
     })
 
     app.get("/saved", (req, res) => {
@@ -79,6 +80,46 @@ module.exports = function (app) {
             res.render("index", { dbArticle: savedArticle, status: "Saved Articles Loaded" })
         })
 
+
+    })
+
+    app.post("/note", (req, res) => {
+        console.log(req.body)
+        db.Articles.findOne({_id: req.body.id}).populate("note").then((dbArticles)=>{
+            console.log(dbArticles.note.body)
+            console.log(req.body.body)
+            if (dbArticles.note.body === req.body.body) {
+                res.json("")
+            }
+            else {
+                db.Notes.create({
+                    title: req.body.title,
+                    body: req.body.body
+                }).then((dbNote) => {
+                    return db.Articles.findOneAndUpdate({ _id: req.body.id }, { note: dbNote._id }, { new: true })
+                }).then((dbArticles)=>{
+                    res.json(dbArticles)
+                })
+            }
+        }).catch(()=>{
+            db.Notes.create({
+                title: req.body.title,
+                body: req.body.body
+            }).then((dbNote) => {
+                return db.Articles.findOneAndUpdate({ _id: req.body.id }, { note: dbNote._id }, { new: true })
+            }).then((dbArticles)=>{
+                res.json(dbArticles)
+            })
+            
+        })
+        
+    })
+
+    app.get("/getNote/:id", (req,res)=>{
+        console.log(req.params.id)
+        db.Articles.findOne({_id: req.params.id}).populate("note").then((dbArticles)=>{
+            res.json(dbArticles)
+        })
 
     })
 

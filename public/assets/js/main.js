@@ -5,9 +5,7 @@ $(document).ready(function () {
 
     $(".heart").on("click", function (e) {
         isSaved = e.target.dataset.saved
-        console.log(e)
         id = e.target.id
-        console.log(id)
         if (isSaved == "false") {
             $("#" + id).attr("src", "https://img.icons8.com/cotton/64/000000/like--v3.png")
             $("#" + id).attr("data-saved", "true")
@@ -15,9 +13,10 @@ $(document).ready(function () {
                 id: e.target.dataset.articleid,
                 saved: "true",
                 hearturl: "https://img.icons8.com/cotton/64/000000/like--v3.png"
-            }, (e) => {
-                console.log(e)
-    
+            }, (updatedArticle) => {
+                console.log(updatedArticle)
+
+
             })
         }
         else {
@@ -25,15 +24,56 @@ $(document).ready(function () {
             $("#" + id).attr("data-saved", "false")
             $.post("/add", {
                 id: e.target.dataset.articleid,
-                saved: "true",
+                saved: "false",
                 hearturl: "https://img.icons8.com/pastel-glyph/64/000000/like--v1.png"
-            }, (e) => {s
-                console.log(e)
-    
+            }, (updatedArticle) => {
+                console.log(updatedArticle)
+                if (e.target.baseURI === "http://localhost:3000/saved") {
+                    $("#" + id).parent().parent().removeClass()
+                    $("#" + id).parent().parent().html("")
+                }
             })
         }
     })
 
+
+    $(".note").on("click", function (e) {
+        console.log(e)
+        openId = e.target.dataset.articleid;
+        console.log(openId)
+        $("#noteModal").modal("toggle")
+        $("#noteModal").attr("data-articleid", e.target.dataset.articleid)
+        $.get("/getNote/" + openId, (updatedNote) => {
+            // console.log(updatedNote)
+            $(".modal-title").val(updatedNote.note.title)
+            $("#noteBody").val(updatedNote.note.body)
+
+        })
+    })
+
+
+    $('#noteModal').on('hidden.bs.modal', function (e) {
+        console.log(e)
+        title = $(".modal-title").val()
+        body = $("#noteBody").val()
+        id = $("#noteModal").attr("data-articleid");
+        console.log(id)
+        if (title && body && id) {
+
+            $.post("/note", {
+                id: id,
+                title: title,
+                body: body
+            }, (updatedNote) => {
+                // console.log(updatedNote)
+                $(".modal-title").val("")
+                $("#noteBody").val("")
+                $("#noteModal").attr("data-articleid", "")
+
+
+            })
+        }
+    })
 
 
 
