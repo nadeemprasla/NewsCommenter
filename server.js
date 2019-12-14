@@ -3,7 +3,7 @@ const express = require("express");
 const mongoose = require("mongoose");
 var env = process.env.NODE_ENV || "development";
 var PORT = process.env.PORT || 8080;
-const MONGODB_URI = process.env.MONGODB_URI;
+const MONGODB_URI = process.env.MONGODB_URI || "mongodb://np19549:nadeem1@ds353338.mlab.com:53338/heroku_xgp86fqw";
 
 
 const app = express();
